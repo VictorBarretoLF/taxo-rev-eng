@@ -1,8 +1,12 @@
 import "../styles/globals.css";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+interface RootLayoutProps {
+	children: React.ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
 	return (
-		<html lang="pt-br">
+		<html>
 			<body className="min-h-screen">{children}</body>
 		</html>
 	);
