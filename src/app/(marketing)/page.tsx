@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function IndexPage() {
 	return (
-		<section className="">
+		<section className="mx-auto">
 			<div>
 				<h1>Publishing Platform for Everyone</h1>
 				<p className="">
