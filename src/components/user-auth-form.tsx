@@ -1,3 +1,5 @@
+"use client";
+
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,9 +14,21 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 type FormData = z.infer<typeof userAuthSchema>;
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isSubmitting },
+	} = useForm<FormData>({
+		resolver: zodResolver(userAuthSchema),
+	});
+
+	async function onSubmit(data: FormData) {
+		await new Promise((resolve) => setTimeout(resolve, 10000));
+	}
+
 	return (
 		<div className={cn("grid gap-6", className)} {...props}>
-			<form action="">
+			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className="grid gap-2">
 					<div className="grid gap-1">
 						<label className="sr-only" htmlFor="email">
@@ -28,11 +42,15 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 							autoCapitalize="none"
 							autoComplete="email"
 							autoCorrect="off"
-							name="email"
+							disabled={isSubmitting}
+							{...register("email")}
 						/>
-						<p className="px-1 text-xs text-red-600">mensagem de erro aqui</p>
+						{errors?.email && (
+							<p className="px-1 text-xs text-red-600">{errors.email.message}</p>
+						)}
 					</div>
 					<button className="inline-flex w-full items-center justify-center rounded-lg bg-[#24292F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#24292F]/90 focus:outline-none focus:ring-4 focus:ring-[#24292F]/50 dark:hover:bg-[#050708]/30 dark:focus:ring-slate-500">
+						{isSubmitting && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
 						Sign In with Email
 					</button>
 				</div>
