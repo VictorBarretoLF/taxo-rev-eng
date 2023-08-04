@@ -1,4 +1,5 @@
 import { Icons } from "@/components/icons";
+import { UserAuthForm } from "@/components/user-auth-form";
 import Link from "next/link";
 
 export default function RegisterPage() {
@@ -20,6 +21,7 @@ export default function RegisterPage() {
 							Enter your email below to create your account
 						</p>
 					</div>
+					<UserAuthForm />
 				</div>
 			</div>
 		</div>
